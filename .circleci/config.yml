@@ -26,6 +26,10 @@ jobs:
             export ARM64_IMAGE_TAG=${ARM64_VERSION}-arm64
             echo "ARM64_VERSION=$ARM64_VERSION"
             echo "ARM64_IMAGE_TAG=$ARM64_IMAGE_TAG"
+            if [ -z "$ARM64_VERSION" ]; then
+              echo "ARM64_VERSION is empty, skipping publish"
+              circleci-agent step halt
+            fi
       - run:
           name: check if docker image already exists
           command: |
