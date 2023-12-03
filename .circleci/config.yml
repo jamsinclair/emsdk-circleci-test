@@ -34,6 +34,7 @@ jobs:
             if [ -z "$ARM64_VERSION" ]; then
               echo "ARM64_VERSION is empty, skipping publish"
               circleci-agent step halt
+              exit 0
             fi
             DOCKER_IMAGE_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" https://hub.docker.com/v2/repositories/emscripten/emsdk/tags/$ARM64_IMAGE_TAG)
             if [ "$DOCKER_IMAGE_EXISTS" = "200" ]; then
