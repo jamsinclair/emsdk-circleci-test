@@ -3,7 +3,7 @@ version: 2.1
 executors:
   linux_arm64:
     machine:
-      image: ubuntu-2004:202101-01
+      image: ubuntu-2004:2023.07.1
     resource_class: arm.medium
 
 jobs:
@@ -34,10 +34,6 @@ jobs:
               echo "Docker image already exists, skipping build and publish"
               exit 0
             fi
-      - run:
-          name: install docker
-          command: apt-get update -q && apt-get install -q -y docker.io
-      - setup_remote_docker
       - run:
           name: build
           command: make -C ./docker version=${ARM64_VERSION} build
