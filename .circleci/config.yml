@@ -17,7 +17,7 @@ jobs:
             CHANGED_FILES=$(git diff --name-only <<pipeline.git.base_revision>>..<<pipeline.git.revision>>)
             if [[ ! $CHANGED_FILES =~ "emscripten-releases-tags.json" ]]; then
               echo "emscripten-releases-tags.json has not changed, skipping build and publish"
-              exit 0
+              circleci-agent step halt
             fi
       - run:
           name: extract latest emscripten arm64 linux version
@@ -32,7 +32,7 @@ jobs:
             DOCKER_IMAGE_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" https://hub.docker.com/v2/repositories/emscripten/emsdk/tags/$ARM64_IMAGE_TAG)
             if [ "$DOCKER_IMAGE_EXISTS" = "200" ]; then
               echo "Docker image already exists, skipping build and publish"
-              exit 0
+              circleci-agent step halt
             fi
       - run:
           name: build
